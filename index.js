@@ -97,7 +97,7 @@ app.delete('/cart/delete',async(req,resp)=>{
     let result=await collection.deleteMany({});
     resp.send(result)
 })
-app.delete('/cart/:_id',authMiddleware,async(req,resp)=>{
+app.delete('/cart/:_id',async(req,resp)=>{
 
    console.log(req.params)
     let db= await dbConnection();
