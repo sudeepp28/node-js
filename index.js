@@ -24,7 +24,7 @@ app.use(cors());
 app.use('/',RestaurantsRoute)
 app.use('/cart',verify,cartRoute)
 app.use('/order',verify,orderRoute)
-app.use('/saved',savedRoute)
+app.use('/saved',verify,savedRoute)
 app.use('/searches',searchRoute)
 app.use('/',authRoute)
 
