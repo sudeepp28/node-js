@@ -8,6 +8,7 @@ const bcrypt = require('bcryptjs');
 router.post('/register',async(req,resp)=>{
   const db=await dbConnection();
   const users=db.collection('users')
+  const profiles=db.collection('profiles')
     const { name, email, password } = req.body;
      const existingUser = await users.findOne({ email });
   if (existingUser) return resp.status(400).send({ message: 'User already exists' });
@@ -17,9 +18,15 @@ router.post('/register',async(req,resp)=>{
 
   const result = await users.insertOne(newUser);
 
-  
+  const userId=result.insertedId;
 
-  resp.send(result);
+  await profiles.insertOne({
+     userId: userId.toString(),
+      name,
+      email,
+  })
+
+  resp.send({result, message:"profile created"});
 });
 router.post('/login',async (req,resp)=>{
    const db = await dbConnection();
